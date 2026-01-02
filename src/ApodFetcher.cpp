@@ -84,13 +84,20 @@ std::string ApodFetcher::fetchApodImage(const std::string &remotePath) {
             }
             else {
                 std::cout << "Unsupported type: " + contentType + ". No wallpaper today!" << std::endl;
+
+                return "";
             }
         }
 
-        savePath = cacheDir + "/apod." + extension;
+        const std::string wallpaperDir = cacheDir + "/wallpaper";
+
+        std::filesystem::remove_all(wallpaperDir);
+        std::filesystem::create_directories(cacheDir + "/wallpaper");
+
+        savePath = wallpaperDir + "/apod." + extension;
         std::cout << "Saving to " + savePath << std::endl;
         std::ofstream apodImageOfstream;
-        apodImageOfstream.open(cacheDir + "/apod." + extension);
+        apodImageOfstream.open(wallpaperDir + "/apod." + extension);
         apodImageOfstream << body;
         apodImageOfstream.close();
     }

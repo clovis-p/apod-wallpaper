@@ -1,15 +1,16 @@
 #include <iostream>
 
 #include "ApodFetcher.h"
+#include "BackgroundChanger.h"
 
 int main() {
     std::string url = "https://apod.nasa.gov";
 
-    ApodFetcher* apod_fetcher = new ApodFetcher(url);
+    auto* apodFetcher = new ApodFetcher(url);
+    apodFetcher->fetchApod();
 
-    std::string imagePath = apod_fetcher->fetchApod();
-
-    std::cout << imagePath;
+    auto* backgroundChanger = new BackgroundChanger(SWAYBG);
+    backgroundChanger->ChangeBackground();
 
     return 0;
 }
