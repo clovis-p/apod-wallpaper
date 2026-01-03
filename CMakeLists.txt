@@ -19,6 +19,8 @@ add_executable(apod_wallpaper
         src/ApodFetcher.h
         src/BackgroundChanger.cpp
         src/BackgroundChanger.h
+        src/FsUtils.cpp
+        src/FsUtils.h
 )
 
 target_include_directories(apod_wallpaper PRIVATE ${CMAKE_SOURCE_DIR}/include)

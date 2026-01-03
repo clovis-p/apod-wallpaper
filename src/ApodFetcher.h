@@ -5,7 +5,6 @@
 
 class ApodFetcher {
 private:
-    std::string cacheDir;
     httplib::Client httpClient;
     std::string fetchApodImagePath();
     std::string fetchApodImage(const std::string &remotePath);

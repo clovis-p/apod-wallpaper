@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <iostream>
 
+#include "FsUtils.h"
+
 BackgroundChanger::BackgroundChanger(Strategy strategy) {
     strategy_ = strategy;
     if (strategy == GNOME || strategy == KDE) {
@@ -17,7 +19,7 @@ void BackgroundChanger::ChangeBackground() {
         return;
     }
 
-    std::string wallpaperPath = std::string(std::getenv("HOME")) + "/.cache/apod-fetcher/wallpaper";
+    std::string wallpaperPath = FsUtils::getCacheDir() + "/wallpaper";
     for (const auto& entry : std::filesystem::directory_iterator(wallpaperPath)) {
         if (entry.is_regular_file()) {
             wallpaperPath = entry.path();

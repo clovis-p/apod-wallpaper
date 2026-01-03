@@ -5,11 +5,10 @@
 #include <filesystem>
 #include <fstream>
 
+#include "FsUtils.h"
+
 ApodFetcher::ApodFetcher(const std::string &url) : httpClient(url) {
     std::cout << "Starting HTTP client with URL " + url << std::endl;
-    cacheDir = std::string(std::getenv("HOME")) + "/.cache/apod-fetcher";
-    std::filesystem::create_directories(cacheDir);
-
 }
 
 /**
@@ -104,10 +103,10 @@ std::string ApodFetcher::fetchApodImage(const std::string &remotePath) {
             }
         }
 
-        const std::string wallpaperDir = cacheDir + "/wallpaper";
+        const std::string wallpaperDir = FsUtils::getCacheDir() + "/wallpaper";
 
         std::filesystem::remove_all(wallpaperDir);
-        std::filesystem::create_directories(cacheDir + "/wallpaper");
+        std::filesystem::create_directories(FsUtils::getCacheDir() + "/wallpaper");
 
         savePath = wallpaperDir + "/apod." + extension;
         std::cout << "Saving to " + savePath << std::endl;
