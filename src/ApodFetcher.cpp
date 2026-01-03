@@ -12,10 +12,16 @@ ApodFetcher::ApodFetcher(const std::string &url) : httpClient(url) {
 
 }
 
+/**
+ * @return Path in local filesystem to downloaded APOD file on success, empty string on failure
+ */
 std::string ApodFetcher::fetchApod() {
     return fetchApodImage(fetchApodImagePath());
 }
 
+/**
+ * @return Remote path to today's APOD file on success, empty string on failure
+ */
 std::string ApodFetcher::fetchApodImagePath() {
     std::string path;
     std::string body;
@@ -58,6 +64,10 @@ std::string ApodFetcher::fetchApodImagePath() {
     return path;
 }
 
+/**
+ * @param remotePath Remote path to today's APOD file
+ * @return Path in local filesystem to downloaded APOD file on success, empty string on failure
+ */
 std::string ApodFetcher::fetchApodImage(const std::string &remotePath) {
     std::string body;
     std::string extension;
