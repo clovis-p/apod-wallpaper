@@ -38,7 +38,7 @@ std::string ApodFetcher::fetchApodImagePath() {
         return "";
     }
 
-    std::regex apodImagePathRegex(R"((<a href="image\/[0-9]{4}\/).+\.*.+(">))",
+    std::regex apodImagePathRegex(R"((<a href="image\/[0-9]{4}\/)[a-zA-Z0-9_\-]+\.[a-zA-Z0-9]{3,4}(">))",
         std::regex_constants::ECMAScript | std::regex_constants::icase);
 
     auto match = std::sregex_iterator(body.begin(), body.end(), apodImagePathRegex);
