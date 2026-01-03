@@ -7,10 +7,16 @@ int main() {
     std::string url = "https://apod.nasa.gov";
 
     auto* apodFetcher = new ApodFetcher(url);
-    apodFetcher->fetchApod();
+    std::string localImagePath = apodFetcher->fetchApod();
 
-    auto* backgroundChanger = new BackgroundChanger(SWAYBG);
-    backgroundChanger->ChangeBackground();
+    if (!localImagePath.empty()) {
+        auto* backgroundChanger = new BackgroundChanger(SWAYBG);
+        backgroundChanger->ChangeBackground();
+    }
+    else {
+        std::cerr << "Failed to download APOD" << std::endl;
+        return -1;
+    }
 
     return 0;
 }

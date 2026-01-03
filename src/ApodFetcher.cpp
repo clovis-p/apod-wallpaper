@@ -16,7 +16,13 @@ ApodFetcher::ApodFetcher(const std::string &url) : httpClient(url) {
  * @return Path in local filesystem to downloaded APOD file on success, empty string on failure
  */
 std::string ApodFetcher::fetchApod() {
-    return fetchApodImage(fetchApodImagePath());
+    std::string remoteApodImagePath = fetchApodImagePath();
+
+    if (remoteApodImagePath.empty()) {
+        return "";
+    }
+
+    return fetchApodImage(remoteApodImagePath);
 }
 
 /**
@@ -27,6 +33,7 @@ std::string ApodFetcher::fetchApodImagePath() {
     std::string body;
     std::string extension;
 
+    std::cout << "Fetching today's APOD..." << std::endl;
     if (auto res = httpClient.Get("/apod/")) {
         body = res->body;
     }
@@ -34,7 +41,6 @@ std::string ApodFetcher::fetchApodImagePath() {
         std::cerr << "Error fetching APOD:" << std::endl;
         std::cerr << res.error() << std::endl;
 
-        // todo: error handling
         return "";
     }
 
@@ -57,7 +63,6 @@ std::string ApodFetcher::fetchApodImagePath() {
         std::cerr << "Error fetching APOD:" << std::endl;
         std::cerr << "Found " << matchCount << " regex matches (expected 1)";
 
-        // todo: error handling
         return "";
     }
 
@@ -115,7 +120,6 @@ std::string ApodFetcher::fetchApodImage(const std::string &remotePath) {
         std::cerr << "Error fetching APOD image file:" << std::endl;
         std::cerr << res.error() << std::endl;
 
-        // todo: error handling
         return "";
     }
 
