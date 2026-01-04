@@ -12,7 +12,7 @@ BackgroundChanger::BackgroundChanger(Strategy strategy) {
     }
 }
 
-void BackgroundChanger::ChangeBackground() {
+void BackgroundChanger::changeBackground() {
     if (strategy_ == GNOME || strategy_ == KDE) {
         std::cerr << "Strategy " << strategy_ << " not implemented" << std::endl;
 

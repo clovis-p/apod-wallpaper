@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="main-window">
+    <property name="default-height">400</property>
+    <property name="default-width">600</property>
+    <property name="title">APOD Wallpaper</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkOverlay">
+            <property name="child">
+              <object class="GtkPicture" id="image">
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+              </object>
+            </property>
+            <child type="overlay">
+              <object class="GtkSpinner" id="spinner">
+                <property name="halign">center</property>
+                <property name="spinning">True</property>
+                <property name="valign">center</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkActionBar">
+            <property name="valign">end</property>
+            <child type="start">
+              <object class="GtkBox">
+                <property name="halign">start</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkButton" id="refresh-button">
+                    <property name="icon-name">view-refresh</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="center">
+              <object class="GtkBox">
+                <property name="halign">center</property>
+                <property name="spacing">6</property>
+                <child type="start">
+                  <object class="GtkButton" id="previous-button">
+                    <property name="icon-name">go-previous</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkEntry" id="date-entry">
+                        <property name="placeholder-text">YYYY/MM/DD</property>
+                        <property name="primary-icon-name">x-office-calendar</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child type="end">
+                  <object class="GtkButton" id="next-button">
+                    <property name="icon-name">go-next</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkBox">
+                <property name="halign">end</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkButton" id="apply-button">
+                    <property name="icon-name">computer-symbolic</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

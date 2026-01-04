@@ -14,7 +14,7 @@ private:
 public:
     BackgroundChanger(Strategy strategy);
 
-    void ChangeBackground();
+    void changeBackground();
 };
 
 

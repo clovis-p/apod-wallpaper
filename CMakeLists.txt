@@ -13,6 +13,12 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(httplib)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK4 REQUIRED gtk4)
+include_directories(${GTK4_INCLUDE_DIRS})
+link_directories(${GTK4_LIBRARY_DIRS})
+add_definitions(${GTK4_CFLAGS_OTHER})
+
 add_executable(apod_wallpaper
         src/ApodWallpaper.cpp
         src/ApodFetcher.cpp
@@ -21,8 +27,10 @@ add_executable(apod_wallpaper
         src/BackgroundChanger.h
         src/FsUtils.cpp
         src/FsUtils.h
+        src/WindowController.cpp
+        src/WindowController.h
 )
 
 target_include_directories(apod_wallpaper PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
-target_link_libraries(apod_wallpaper PRIVATE httplib::httplib)
+target_link_libraries(apod_wallpaper PRIVATE httplib::httplib ${GTK4_LIBRARIES})
