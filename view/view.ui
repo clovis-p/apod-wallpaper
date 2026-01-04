@@ -52,8 +52,11 @@
                   <object class="GtkBox">
                     <child>
                       <object class="GtkEntry" id="date-entry">
+                        <property name="halign">start</property>
+                        <property name="invisible-char">4</property>
+                        <property name="max-width-chars">11</property>
                         <property name="placeholder-text">YYYY/MM/DD</property>
-                        <property name="primary-icon-name">x-office-calendar</property>
+                        <property name="secondary-icon-name">x-office-calendar</property>
                       </object>
                     </child>
                   </object>
