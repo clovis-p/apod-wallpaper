@@ -73,6 +73,9 @@
                   <object class="GtkButton" id="set-as-wallpaper-button">
                     <property name="icon-name">computer-symbolic</property>
                     <property name="sensitive">False</property>
+                    <style>
+                      <class name="suggested-action"/>
+                    </style>
                   </object>
                 </child>
               </object>
