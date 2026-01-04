@@ -2,15 +2,20 @@
 
 #include "WindowController.h"
 
+#include "BackgroundChanger.h"
+
 ApodFetcher* WindowController::apodFetcher_ = nullptr;
+BackgroundChanger* WindowController::backgroundChanger_ = nullptr;
 bool WindowController::quit = false;
 GtkWindow* WindowController::window = nullptr;
 GtkButton *WindowController::refreshButton = nullptr;
+GtkButton *WindowController::setAsWallpaperButton = nullptr;
 GtkSpinner *WindowController::spinner = nullptr;
 GtkPicture *WindowController::image = nullptr;
 
-WindowController::WindowController(ApodFetcher *apodFetcher) {
+WindowController::WindowController(ApodFetcher *apodFetcher, BackgroundChanger *backgroundChanger) {
     apodFetcher_ = apodFetcher;
+    backgroundChanger_ = backgroundChanger;
 }
 
 int WindowController::initWindow() {
@@ -45,10 +50,12 @@ void WindowController::activate(GtkApplication *app, gpointer data)
     gtk_window_set_application(window, app);
 
     refreshButton = GTK_BUTTON(gtk_builder_get_object(gtk_builder, "refresh-button"));
+    setAsWallpaperButton = GTK_BUTTON(gtk_builder_get_object(gtk_builder, "set-as-wallpaper-button"));
     spinner = GTK_SPINNER(gtk_builder_get_object(gtk_builder, "spinner"));
     image = GTK_PICTURE(gtk_builder_get_object(gtk_builder, "image"));
 
     g_signal_connect(refreshButton, "clicked", G_CALLBACK(WindowController::onRefreshButtonClick), spinner);
+    g_signal_connect(setAsWallpaperButton, "clicked", G_CALLBACK(WindowController::onSetAsWallpaperButtonClick), spinner);
     g_signal_connect(window, "destroy", G_CALLBACK(WindowController::onWindowClose), nullptr);
 
     gtk_window_present(window);
@@ -58,6 +65,12 @@ void WindowController::activate(GtkApplication *app, gpointer data)
 
 void WindowController::onRefreshButtonClick(GtkApplication *app) {
     WindowController::refreshApodImageView();
+}
+
+void WindowController::onSetAsWallpaperButtonClick(GtkApplication *app) {
+    std::thread([]() {
+        backgroundChanger_->changeBackground();
+    }).detach();
 }
 
 void WindowController::refreshApodImageView() {
@@ -78,6 +91,7 @@ void WindowController::refreshApodImageView() {
             int len = std::strlen(p);
             if (len > 0) {
                 gtk_picture_set_filename(image, p);
+                gtk_widget_set_sensitive(GTK_WIDGET(setAsWallpaperButton), true);
             }
             else {
                 std::cerr << "Skipping gtk_picture update: apodFetcher returned an empty string." << std::endl;

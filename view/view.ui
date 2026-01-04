@@ -70,8 +70,9 @@
                 <property name="halign">end</property>
                 <property name="spacing">6</property>
                 <child>
-                  <object class="GtkButton" id="apply-button">
+                  <object class="GtkButton" id="set-as-wallpaper-button">
                     <property name="icon-name">computer-symbolic</property>
+                    <property name="sensitive">False</property>
                   </object>
                 </child>
               </object>

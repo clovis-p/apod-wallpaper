@@ -4,24 +4,28 @@
 #include <gtk/gtk.h>
 
 #include "ApodFetcher.h"
+#include "BackgroundChanger.h"
 
 
 class WindowController {
 public:
-    WindowController(ApodFetcher *apodFetcher);
+    WindowController(ApodFetcher *apodFetcher, BackgroundChanger *backgroundChanger);
 
     int initWindow();
 
 private:
     static void activate(GtkApplication *app, gpointer data);
     static void onRefreshButtonClick(GtkApplication *app);
+    static void onSetAsWallpaperButtonClick(GtkApplication *app);
     static void refreshApodImageView();
     static void onWindowClose();
     static void mainLoop(GMainContext *context);
 
     static GtkWindow *window;
     static ApodFetcher *apodFetcher_;
+    static BackgroundChanger *backgroundChanger_;
     static GtkButton *refreshButton;
+    static GtkButton *setAsWallpaperButton;
     static GtkSpinner *spinner;
     static GtkPicture *image;
     static bool quit;
