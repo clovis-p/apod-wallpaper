@@ -57,10 +57,40 @@ void WindowController::activate(GtkApplication *app, gpointer data)
 }
 
 void WindowController::onRefreshButtonClick(GtkApplication *app) {
-    // todo: run this in another thread
+    WindowController::refreshApodImageView();
+}
+
+void WindowController::refreshApodImageView() {
+    gtk_widget_set_sensitive(GTK_WIDGET(refreshButton), false);
     gtk_spinner_start(spinner);
-    refreshApod();
-    gtk_spinner_stop(spinner);
+
+    std::thread([]() {
+        char* imagePath = g_strdup(apodFetcher_->fetchApod().c_str());
+
+        g_main_context_invoke(g_main_context_default(), [](gpointer data) -> gboolean {
+            if (quit) {
+                g_free(data);
+                return G_SOURCE_REMOVE;
+            }
+
+            char* p = static_cast<char*>(data);
+
+            int len = std::strlen(p);
+            if (len > 0) {
+                gtk_picture_set_filename(image, p);
+            }
+            else {
+                std::cerr << "Skipping gtk_picture update: apodFetcher returned an empty string." << std::endl;
+            }
+
+            gtk_spinner_stop(spinner);
+            gtk_widget_set_sensitive(GTK_WIDGET(refreshButton), true);
+
+            g_free(p);
+
+            return G_SOURCE_REMOVE;
+        }, imagePath);
+    }).detach();
 }
 
 void WindowController::onWindowClose() {
@@ -69,9 +99,4 @@ void WindowController::onWindowClose() {
 
 void WindowController::mainLoop(GMainContext *context) {
     g_main_context_iteration(context, true);
-}
-
-void WindowController::refreshApod() {
-    std::string imagePath = apodFetcher_->fetchApod();
-    gtk_picture_set_filename(image, imagePath.c_str());
 }

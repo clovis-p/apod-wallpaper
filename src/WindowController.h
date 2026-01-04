@@ -15,10 +15,9 @@ public:
 private:
     static void activate(GtkApplication *app, gpointer data);
     static void onRefreshButtonClick(GtkApplication *app);
+    static void refreshApodImageView();
     static void onWindowClose();
-
     static void mainLoop(GMainContext *context);
-    static void refreshApod();
 
     static GtkWindow *window;
     static ApodFetcher *apodFetcher_;
