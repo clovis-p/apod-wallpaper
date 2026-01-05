@@ -9,7 +9,6 @@
 #include "FsUtils.h"
 
 ApodFetcher::ApodFetcher(const std::string &url) : httpClient(url) {
-    // todo: what is that doing here
     std::cout << "Starting HTTP client with URL " + url << std::endl;
 }
 
