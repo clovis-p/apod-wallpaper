@@ -5,5 +5,6 @@ Only works with [swaybg](https://github.com/swaywm/swaybg) for now.
 
 ![Screenshot](https://raw.githubusercontent.com/clovis-p/apod-wallpaper/refs/heads/master/screenshots/screenshot.png)
 
-Image Credit & Copyright: Zhengjie Wu and Jeff Dai (TWAN)
-https://apod.nasa.gov/apod/ap260103.html
+https://apod.nasa.gov/apod/ap250913.html
+
+Image Credit & Copyright: [Joao Yordanov Serralheiro](https://www.joaoysphotography.com/about)
