@@ -14,7 +14,7 @@ private:
 public:
     BackgroundChanger(Strategy strategy);
 
-    void changeBackground();
+    void changeBackground(const std::string &dirPath);
 };
 
 

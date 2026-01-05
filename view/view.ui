@@ -17,10 +17,18 @@
               </object>
             </property>
             <child type="overlay">
-              <object class="GtkSpinner" id="spinner">
+              <object class="GtkBox">
                 <property name="halign">center</property>
-                <property name="spinning">False</property>
                 <property name="valign">center</property>
+                <child>
+                  <object class="GtkSpinner" id="spinner">
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <style>
+                      <class name="spinner-background"/>
+                    </style>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
@@ -57,6 +65,14 @@
                         <property name="max-width-chars">11</property>
                         <property name="placeholder-text">YYYY/MM/DD</property>
                         <property name="secondary-icon-name">x-office-calendar</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkPopover" id="calendar-popover">
+                        <property name="position">bottom</property>
+                        <child>
+                          <object class="GtkCalendar" id="calendar"/>
+                        </child>
                       </object>
                     </child>
                   </object>

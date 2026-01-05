@@ -12,14 +12,14 @@ BackgroundChanger::BackgroundChanger(Strategy strategy) {
     }
 }
 
-void BackgroundChanger::changeBackground() {
+void BackgroundChanger::changeBackground(const std::string &dirPath) {
     if (strategy_ == GNOME || strategy_ == KDE) {
         std::cerr << "Strategy " << strategy_ << " not implemented" << std::endl;
 
         return;
     }
 
-    std::string wallpaperPath = FsUtils::getCacheDir() + "/wallpaper";
+    std::string wallpaperPath = FsUtils::getCacheDir() + "/wallpaper/" + dirPath;
     for (const auto& entry : std::filesystem::directory_iterator(wallpaperPath)) {
         if (entry.is_regular_file()) {
             wallpaperPath = entry.path();
