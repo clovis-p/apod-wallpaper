@@ -45,6 +45,9 @@ std::string ApodFetcher::fetchApod(std::chrono::year_month_day date) {
     if (std::filesystem::exists(savePath + "webp")) {
         return savePath + "webp";
     }
+    if (std::filesystem::exists(savePath + "tiff")) {
+        return savePath + "tiff";
+    }
 
     std::cout << "APOD " << dateToFormattedString(date) << " was not found in cache" << std::endl;
 
@@ -134,6 +137,9 @@ std::string ApodFetcher::fetchApodImage(const std::string &remotePath, std::chro
             }
             else if (contentType == "image/webp") {
                 extension = "webp";
+            }
+            else if (contentType == "image/tiff") {
+                extension = "tiff";
             }
             else {
                 std::cout << "Unsupported type: " + contentType + ". No wallpaper today!" << std::endl;
